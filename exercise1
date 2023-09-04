@@ -1,0 +1,12 @@
+1.git config --global init.defaultBranch master
+2.git init
+3. git status  <untrack file>
+4. git add .   <staging file>
+5.git status 
+6.git config --global user.name "vindhyajee5"
+7.git commit -m "first Excercise1 commit"
+8.git status
+9. git remote add origin <repo url>
+10.git remote -v           
+11.git push -u origin master
+
