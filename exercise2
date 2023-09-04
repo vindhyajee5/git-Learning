@@ -1,0 +1,26 @@
+vindhya@Vindhyachal:~/clone-directory$ git clone https://github.com/vindhyajee5/git-Learning.git
+Cloning into 'git-Learning'...
+remote: Enumerating objects: 6, done.
+remote: Counting objects: 100% (6/6), done.
+remote: Compressing objects: 100% (4/4), done.
+remote: Total 6 (delta 1), reused 2 (delta 0), pack-reused 0
+Receiving objects: 100% (6/6), done.
+Resolving deltas: 100% (1/1), done.
+vindhya@Vindhyachal:~/clone-directory$ ls
+git-Learning
+vindhya@Vindhyachal:~/clone-directory$ cd git-Learning
+vindhya@Vindhyachal:~/clone-directory/git-Learning$ git branch
+* master
+vindhya@Vindhyachal:~/clone-directory/git-Learning$
+vindhya@Vindhyachal:~/clone-directory$ cd git-Learning
+vindhya@Vindhyachal:~/clone-directory/git-Learning$ git branch
+* master
+vindhya@Vindhyachal:~/clone-directory/git-Learning$ git branch dev1
+vindhya@Vindhyachal:~/clone-directory/git-Learning$ git branch
+  dev1
+* master
+vindhya@Vindhyachal:~/clone-directory/git-Learning$ git checkout dev1
+Switched to branch 'dev1'
+vindhya@Vindhyachal:~/clone-directory/git-Learning$ git branch
+* dev1
+  master
