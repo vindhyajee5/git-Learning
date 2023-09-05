@@ -9,4 +9,4 @@
 9. git remote add origin <repo url>
 10.git remote -v           
 11.git push -u origin master
-
+12. Note:Password use aceess key here(go to setting ->Developer tool>genrate token)
