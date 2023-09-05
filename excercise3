@@ -1,0 +1,42 @@
+vindhya@Vindhyachal:~/clone-directory/git-Learning$   mkdir  merging-system
+vindhya@Vindhyachal:~/clone-directory/git-Learning$ cd merging-system/
+vindhya@Vindhyachal:~/clone-directory/git-Learning/merging-system$ ls
+vindhya@Vindhyachal:~/clone-directory/git-Learning/merging-system$ git clone https://github.com/vindhyajee5/git-Learning.git
+Cloning into 'git-Learning'...
+remote: Enumerating objects: 12, done.
+remote: Counting objects: 100% (12/12), done.
+remote: Compressing objects: 100% (10/10), done.
+remote: Total 12 (delta 2), reused 4 (delta 0), pack-reused 0
+Receiving objects: 100% (12/12), done.
+Resolving deltas: 100% (2/2), done.
+vindhya@Vindhyachal:~/clone-directory/git-Learning/merging-system$ git branch
+* dev1
+  master
+vindhya@Vindhyachal:~/clone-directory/git-Learning/merging-system$ git checkout master
+Switched to branch 'master'
+Your branch is up to date with 'origin/master'.
+vindhya@Vindhyachal:~/clone-directory/git-Learning/merging-system$ git branch
+  dev1
+* master
+vindhya@Vindhyachal:~/clone-directory/git-Learning/merging-system$ git merge dev1
+Updating 76bbc4a..853edf6
+Fast-forward
+ exercise2 | 26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
+ create mode 100644 exercise2
+vindhya@Vindhyachal:~/clone-directory/git-Learning/merging-system$ git log --graph --pretty=oneline
+* 853edf6be9c852f227c1e73c6908cf22a791bede (HEAD -> master, origin/dev1, dev1) exercise2 First commit
+* 76bbc4af29fde50e551f4e6b939014723bdba841 (origin/master, origin/HEAD) Update exercise1
+* 0dc1f5553921462e36a68a51e9a047a34062280e exercise1 first commit
+
+vindhya@Vindhyachal:~/clone-directory/git-Learning/merging-system$ git push origin master
+Username for 'https://github.com': vindhyajee5
+Password for 'https://vindhyajee5@github.com':
+Enumerating objects: 4, done.
+Counting objects: 100% (4/4), done.
+Delta compression using up to 16 threads
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 574 bytes | 574.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+To https://github.com/vindhyajee5/git-Learning.git
+   76bbc4a..853edf6  master -> master
