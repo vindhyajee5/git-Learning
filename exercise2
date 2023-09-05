@@ -24,3 +24,51 @@ Switched to branch 'dev1'
 vindhya@Vindhyachal:~/clone-directory/git-Learning$ git branch
 * dev1
   master
+
+vindhya@Vindhyachal:~/clone-directory/git-Learning$ vi exercise2
+vindhya@Vindhyachal:~/clone-directory/git-Learning$ git status
+On branch dev1
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        exercise2
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+vindhya@Vindhyachal:~/clone-directory/git-Learning$ git add exercise2
+vindhya@Vindhyachal:~/clone-directory/git-Learning$ git status
+On branch dev1
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   exercise2
+
+vindhya@Vindhyachal:~/clone-directory/git-Learning$ git commit -m "exercise2 First commit"
+[dev1 853edf6] exercise2 First commit
+ Committer: vindhyajee5 <vindhya@Vindhyachal.localdomain>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly:
+
+    git config --global user.name "Your Name"
+    git config --global user.email you@example.com
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 1 file changed, 26 insertions(+)
+ create mode 100644 exercise2
+vindhya@Vindhyachal:~/clone-directory/git-Learning$ git push origin dev1
+Username for 'https://github.com': vindhyajee5
+Password for 'https://vindhyajee5@github.com':
+Enumerating objects: 4, done.
+Counting objects: 100% (4/4), done.
+Delta compression using up to 16 threads
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 574 bytes | 574.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+remote:
+remote: Create a pull request for 'dev1' on GitHub by visiting:
+remote:      https://github.com/vindhyajee5/git-Learning/pull/new/dev1
+remote:
+To https://github.com/vindhyajee5/git-Learning.git
+ * [new branch]      dev1 -> dev1
