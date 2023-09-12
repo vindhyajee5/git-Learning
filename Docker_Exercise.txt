@@ -1,0 +1,302 @@
+1.docker pull ubuntu
+2.docker images
+3.docker run -it  -d ubuntu
+4.docker ps
+5.docker exec -it f511b9e61ea1  bash
+
+  a)root@f511b9e61ea1:/# ls
+bin  boot  dev  etc  home  lib  lib32  lib64  libx32  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+
+ b)root@f511b9e61ea1:/# apt-get update
+
+ c)root@f511b9e61ea1:/# apt-get install apache2
+  d)root@f511b9e61ea1:/# service apache2 status
+ * apache2 is not running
+  e)root@f511b9e61ea1:/# service apache2 start
+ * Starting Apache httpd web server apache2
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.17.0.2. Set the 'ServerName' directive globally to suppress this message
+ *
+ f)root@f511b9e61ea1:/# service apache2 status
+  g)#exit
+
+6)docker commit f511b9e61ea1  vindhyajee5/apache-ubuntu
+sha256:d642a182bf3059b20f3d5521d19db99e27c2eb24eee30362435dbc726d662ae4
+
+7)docker images
+
+8)C:\Users\vindh>docker rm -f f511b9e61ea1
+f511b9e61ea1
+
+9)C:\Users\vindh>docker run -d -it -p85:80 vindhyajee5/apache-ubuntu
+2da19d9278e25ceef0723db6e51e22caaf654be868e55717151448f91039a975
+
+10)C:\Users\vindh>docker ps
+CONTAINER ID   IMAGE                       COMMAND                  CREATED          STATUS          PORTS                NAMES
+2da19d9278e2   vindhyajee5/apache-ubuntu   "bash"                   20 seconds ago   Up 19 seconds   0.0.0.0:85->80/tcp   vigilant_sammet
+
+11)C:\Users\vindh>docker exec -it 2da19d9278e2 bash
+root@2da19d9278e2:/# service apache2 status
+ * apache2 is not running
+root@2da19d9278e2:/# service apache2 start
+ * Starting Apache httpd web server apache2
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.17.0.2. Set the 'ServerName' directive globally to suppress this message
+ *
+root@2da19d9278e2:/# service apache2 status
+ * apache2 is running
+
+12) http://127.0.0.1:85
+
+13)C:\Users\vindh>docker rm -f 2da19d9278e2
+2da19d9278e2
+
+
+
+Example Of docker file :-
+
+A)custom NGINX SERVER RUN throgh Dockerfile
+
+1) index.html
+<!DOCTYPE html>
+<html>
+<body>
+<h1>Welcome to Nginx Web Server</h1>
+<p>This server is running through Docker container</p>
+</body>
+</html>
+
+2) make Dockerfile
+
+FROM nginx
+COPY index.html /usr/share/nginx/html
+
+
+3)C:\Users\vindh\NGINXSERVER>dir
+ Volume in drive C is OS
+ Volume Serial Number is 8CA4-06F1
+
+ Directory of C:\Users\vindh\NGINXSERVER
+
+08-09-2023  11:24    <DIR>          .
+08-09-2023  11:20    <DIR>          ..
+08-09-2023  11:22                49 Dockerfile
+08-09-2023  11:21               143 index.html
+               2 File(s)            192 bytes
+               2 Dir(s)  319,681,892,352 bytes free
+
+
+
+C:\Users\vindh\NGINXSERVER>docker build -t vindhyajee5/nginx .
+
+
+4)docker images
+
+REPOSITORY                                                TAG                                                                          IMAGE ID       CREATED          SIZE
+vindhyajee5/nginx                                         latest                                                                       358171b01a34   13 sec
+
+
+5)C:\Users\vindh\NGINXSERVER>docker run --name vindhyajee5-nginx-container -d -p 8081:80 vindhyajee5/nginx
+ec32be1cd5ef224f046cf620750490e5161ab339f2ee88ed810af8c1a543b51a
+
+C:\Users\vindh\NGINXSERVER>docker ps
+CONTAINER ID   IMAGE                       COMMAND                  CREATED          STATUS          PORTS                  NAMES
+ec32be1cd5ef   vindhyajee5/nginx           "/docker-entrypoint.…"   7 seconds ago    Up 6 seconds    0.0.0.0:8081->80/tcp   vindhyajee5-nginx-container
+
+
+
+6)http://127.0.0.1:8081/
+
+
+
+B)Dockerfile for apache2  server
+
+vindhya.html
+<h1>Welcome to apache Web Server</h1>
+<p>This server is running through Docker container</p>
+</body>
+</html>
+
+Dockerfile:-
+
+FROM ubuntu 
+RUN apt-get update 
+RUN apt-get -y install apache2
+ADD . /var/www/html  
+EXPOSE 80
+CMD ["apache2ctl", "-D", "FOREGROUND"]
+
+
+
+docker build -t vindhyajee5/apache2 .
+docker run --name vindhyajee5-apache-container -d -p 8082:80 vindhyajee5/apache2
+
+
+
+C:\Users\vindh\NGINXSERVER\apacheServerDocker>docker run --name vindhyajee5-apache-container -d -p 8082:80 vindhyajee5/apache2
+e8c6f841a65ce265df8379ec763ed9cfb39582d7f954a3bbc278771b4aa7a7db
+
+C:\Users\vindh\NGINXSERVER\apacheServerDocker>docker ps
+CONTAINER ID   IMAGE                       COMMAND                  CREATED             STATUS             PORTS                  NAMES
+e8c6f841a65c   vindhyajee5/apache2         "apache2ctl -D FOREG…"   5 seconds ago       Up 4 seconds       0.0.0.0:8082->80/tcp   vindhyajee5-apache-containr
+
+
+http://127.0.0.1:8082/vindhya.html
+
+
+C) CMD AND ENTRYPINT differnence
+
+   CMD :  if we pass argumnet from outside . then it can override in CMD
+   ENTRYPOINT: if we pass argument from ouside . then it can appending in Entrypoint.
+
+
+CMD Example:-
+Dockerfile
+FROM centos:centos7
+CMD ["yum","-y","install","git"]
+
+docker build -t cmd_test .
+
+docker run cmd_test
+
+
+output :Installed:
+  git.x86_64 0:1.8.3.1-25.el7_9
+C:\Users\vindh\NGINXSERVER\cmd>docker  inspect 9c23bf680ef7
+[
+    {
+        "Id": "9c23bf680ef78cb22a5f784cac3970abec452e817f4fb17423d7a5892548ebe0",
+        "Created": "2023-09-08T07:13:03.003789372Z",
+        "Path": "yum",
+        "Args": [
+            "-y",
+            "install",
+            "git"
+        ],
+but now I run commmad with argument  then what happend here  here override the command
+
+
+C:\Users\vindh\NGINXSERVER\cmd>docker run cmd_test echo "Hello cmd"
+Hello cmd
+
+C:\Users\vindh\NGINXSERVER\cmd>docker inspect 458f515ca22a
+[
+    {
+        "Id": "458f515ca22a5f75a693b20fc7f0a2a9a13453577e0fcaec2abf5d75bf783122",
+        "Created": "2023-09-08T07:16:12.605006032Z",
+        "Path": "echo",
+        "Args": [
+            "Hello cmd"
+        ],
+
+EntryPoint Example:-
+
+Dockerfile
+FROM centos:centos7
+ENTRYPOINT ["yum","-y","install","git"]
+
+docker build -t entry_test .
+
+docker run entry_test
+
+
+output :Installed:
+  git.x86_64 0:1.8.3.1-25.el7_9
+
+but now here pass argument it was appending the parameneter.
+C:\Users\vindh\NGINXSERVER\cmd>docker run entry_test  httpd
+
+both software installed
+
+output:Installed:
+  git.x86_64 0:1.8.3.1-25.el7_9       httpd.x86_64 0:2.4.6-99.el7.centos.1
+
+you can check command  for detatils 
+
+C:\Users\vindh\NGINXSERVER\cmd>docker inspect 60cf5a92e82c
+[
+    {
+        "Id": "60cf5a92e82c8d1eb0a4fc8ec0cec2b2fa201462523d36cc7b0aac4960329dba",
+        "Created": "2023-09-08T07:25:33.099331121Z",
+        "Path": "yum",
+        "Args": [
+            "-y",
+            "install",
+            "git",
+            "httpd"
+        ],
+
+
+
+
+....................................................................................................................................................................
+
+
+Docker Network:-
+A Docker network is a collection of containers running together. A Docker network is used to provide complete isolation to containers.
+
+So I am working on spring boot application communicate with mysql database . so need to create custom network . and both service can communicate with same network.
+
+C:\Users\vindh\NGINXSERVER\docker-microservice>docker network ls
+NETWORK ID     NAME               DRIVER    SCOPE
+880b9134c72d   app-net            bridge    local
+6ebf3e1d2e38   bridge             bridge    local
+d1b002798520   host               host      local
+d83d67f49875   microservice-net   bridge    local
+90803c98fa5b   none               null      local
+
+
+
+C:\Users\vindh\NGINXSERVER\docker-microservice>docker network ls
+NETWORK ID     NAME               DRIVER    SCOPE
+880b9134c72d   app-net            bridge    local
+6ebf3e1d2e38   bridge             bridge    local
+d1b002798520   host               host      local
+d83d67f49875   microservice-net   bridge    local
+90803c98fa5b   none               null      local
+
+C:\Users\vindh\NGINXSERVER\docker-microservice>docker network create microservice-mysql-network
+5c246de3dcd377a3962f0cd6ac92308946c56daba69eaca2987a1da018d03fcf
+
+C:\Users\vindh\NGINXSERVER\docker-microservice>docker network ls
+NETWORK ID     NAME                         DRIVER    SCOPE
+880b9134c72d   app-net                      bridge    local
+6ebf3e1d2e38   bridge                       bridge    local
+d1b002798520   host                         host      local
+5c246de3dcd3   microservice-mysql-network   bridge    local
+d83d67f49875   microservice-net             bridge    local
+90803c98fa5b   none                         null      local
+
+
+C:\Users\vindh\NGINXSERVER\docker-microservice>docker run --name mysql-container --network microservice-mysql-network -p 3309:3306 -e MYSQL_ROOT_PASSWORD=abc@123 -d mysql
+f5323eb5405aefa801c6f43ea04101c551569d11ee6b8178c8c4e083d55e2dbf
+
+
+Note : connect with workbnech
+username: root
+port:3309
+host:localhost
+pass:abc@123
+
+CREATE DATABASE poc;
+use poc
+
+
+Now We need make springbooot application  and made a dockerfile 
+
+steps1:-docker build -t vindhyajee5/productapp  . 
+steps1.1: docker images
+steps2:-docker run --network microservice-mysql-network  -p 8090:8080  -d vindhyajee5/productapp
+steps2.2:docker ps
+
+
+
+
+
+
+
+
+
+
+
+
+
+
